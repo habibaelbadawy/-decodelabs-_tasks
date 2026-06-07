@@ -1,0 +1,202 @@
+
+<h2 class="sr-only">الاتجاه الشهري للإيراد وعدد الطلبات من يناير 2023 إلى يونيو 2025</h2>
+
+<style>
+  .wrap { padding: 1rem 0; font-family: var(--font-sans); }
+  .metrics { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; margin-bottom: 1.5rem; }
+  .mc { background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 0.9rem 1rem; }
+  .mc-label { font-size: 12px; color: var(--color-text-secondary); margin: 0 0 4px; }
+  .mc-val { font-size: 22px; font-weight: 500; color: var(--color-text-primary); margin: 0; }
+  .mc-sub { font-size: 11px; color: var(--color-text-tertiary); margin: 3px 0 0; }
+  .card { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 1rem; margin-bottom: 1rem; }
+  .card-title { font-size: 13px; font-weight: 500; color: var(--color-text-secondary); margin: 0 0 4px; }
+  .legend { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 10px; font-size: 12px; color: var(--color-text-secondary); }
+  .legend span { display: flex; align-items: center; gap: 5px; }
+  .ld { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
+  .filters { display: flex; gap: 8px; margin-bottom: 1rem; flex-wrap: wrap; }
+  .filter-btn { font-size: 12px; padding: 4px 12px; border-radius: var(--border-radius-md); border: 0.5px solid var(--color-border-secondary); background: transparent; color: var(--color-text-secondary); cursor: pointer; }
+  .filter-btn.active { background: var(--color-background-info); color: var(--color-text-info); border-color: var(--color-border-info); }
+  .insight { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 1rem; }
+  .ins { background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 0.75rem 1rem; font-size: 13px; color: var(--color-text-secondary); }
+  .ins strong { display: block; font-size: 14px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 3px; }
+</style>
+
+<div class="wrap">
+
+  <div class="metrics">
+    <div class="mc">
+      <p class="mc-label">إجمالي الإيراد</p>
+      <p class="mc-val">$1.26M</p>
+      <p class="mc-sub">30 شهر</p>
+    </div>
+    <div class="mc">
+      <p class="mc-label">متوسط شهري</p>
+      <p class="mc-val">$42.0k</p>
+      <p class="mc-sub">لكل شهر</p>
+    </div>
+    <div class="mc">
+      <p class="mc-label">أعلى شهر</p>
+      <p class="mc-val">$68.1k</p>
+      <p class="mc-sub">يونيو 2024</p>
+    </div>
+    <div class="mc">
+      <p class="mc-label">أدنى شهر</p>
+      <p class="mc-val">$27.8k</p>
+      <p class="mc-sub">أبريل 2023</p>
+    </div>
+  </div>
+
+  <div class="filters">
+    <button class="filter-btn active" onclick="setView('all',this)">كل الفترة</button>
+    <button class="filter-btn" onclick="setView('2023',this)">2023</button>
+    <button class="filter-btn" onclick="setView('2024',this)">2024</button>
+    <button class="filter-btn" onclick="setView('2025',this)">2025</button>
+  </div>
+
+  <div class="card">
+    <p class="card-title">الإيراد الشهري ($) وعدد الطلبات</p>
+    <div class="legend">
+      <span><span class="ld" style="background:#378add;"></span>الإيراد ($)</span>
+      <span><span class="ld" style="background:#1d9e75; border-radius:50%;"></span>عدد الطلبات</span>
+    </div>
+    <div style="position:relative;width:100%;height:260px;">
+      <canvas id="trendChart" role="img" aria-label="خط بياني للإيراد الشهري وعدد الطلبات من 2023 إلى 2025">الإيراد يتراوح بين 27k و68k شهرياً.</canvas>
+    </div>
+  </div>
+
+  <div class="card">
+    <p class="card-title">مقارنة الإيراد السنوي — شهر بشهر</p>
+    <div class="legend">
+      <span><span class="ld" style="background:#378add;"></span>2023</span>
+      <span><span class="ld" style="background:#1d9e75;"></span>2024</span>
+      <span><span class="ld" style="background:#d85a30;"></span>2025</span>
+    </div>
+    <div style="position:relative;width:100%;height:220px;">
+      <canvas id="compareChart" role="img" aria-label="مقارنة الإيراد الشهري بين 2023 و2024 و2025">مقارنة الأداء الشهري بين السنوات الثلاث.</canvas>
+    </div>
+  </div>
+
+  <div class="insight">
+    <div class="ins"><strong>يونيو 2024 = القمة</strong>$68,069 — أعلى شهر في كل الفترة.</div>
+    <div class="ins"><strong>أبريل 2023 = القاع</strong>$27,752 — أدنى أداء مُسجّل.</div>
+    <div class="ins"><strong>لا موسمية واضحة</strong>القمم والقيعان موزعة عشوائياً على مدار السنة.</div>
+    <div class="ins"><strong>2025 يبدأ بهدوء</strong>يناير $29k، لكن يونيو ارتفع لـ $53k — تعافٍ واضح.</div>
+  </div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+const allMonths = ['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
+
+const data = {
+  labels: ['يناير 23','فبراير 23','مارس 23','أبريل 23','مايو 23','يونيو 23','يوليو 23','أغسطس 23','سبتمبر 23','أكتوبر 23','نوفمبر 23','ديسمبر 23','يناير 24','فبراير 24','مارس 24','أبريل 24','مايو 24','يونيو 24','يوليو 24','أغسطس 24','سبتمبر 24','أكتوبر 24','نوفمبر 24','ديسمبر 24','يناير 25','فبراير 25','مارس 25','أبريل 25','مايو 25','يونيو 25'],
+  revenue: [56686,40118,48609,27752,63837,49500,42821,54352,29527,52608,43080,43755,38528,36910,36031,49613,27909,68069,42964,31991,39795,37227,32414,38786,29099,35318,39201,31821,43397,53047],
+  orders: [47,37,43,31,49,45,44,51,29,47,41,46,32,32,36,50,34,53,43,28,44,31,35,41,27,37,49,32,37,49]
+};
+
+const ranges = {
+  all: [0,30],
+  '2023': [0,12],
+  '2024': [12,24],
+  '2025': [24,30]
+};
+
+let trendChart, compareChart;
+
+function buildTrend(start, end) {
+  const labels = data.labels.slice(start, end);
+  const rev = data.revenue.slice(start, end);
+  const ord = data.orders.slice(start, end);
+  if (trendChart) trendChart.destroy();
+  trendChart = new Chart(document.getElementById('trendChart'), {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [
+        {
+          label: 'الإيراد ($)',
+          data: rev,
+          borderColor: '#378add',
+          backgroundColor: 'rgba(55,138,221,0.07)',
+          borderWidth: 2,
+          pointRadius: 3,
+          pointBackgroundColor: '#378add',
+          fill: true,
+          tension: 0.35,
+          yAxisID: 'y'
+        },
+        {
+          label: 'عدد الطلبات',
+          data: ord,
+          borderColor: '#1d9e75',
+          backgroundColor: 'transparent',
+          borderWidth: 1.5,
+          pointRadius: 3,
+          pointBackgroundColor: '#1d9e75',
+          borderDash: [4,3],
+          fill: false,
+          tension: 0.35,
+          yAxisID: 'y2'
+        }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { ticks: { maxTicksLimit: 10, font: { size: 11 }, color: '#888' }, grid: { display: false } },
+        y: {
+          position: 'left',
+          ticks: { callback: v => '$' + Math.round(v/1000) + 'k', font: { size: 11 }, color: '#378add' },
+          grid: { color: 'rgba(130,130,130,0.08)' }
+        },
+        y2: {
+          position: 'right',
+          ticks: { font: { size: 11 }, color: '#1d9e75' },
+          grid: { display: false }
+        }
+      }
+    }
+  });
+}
+
+function buildCompare() {
+  const d23 = data.revenue.slice(0,12);
+  const d24 = data.revenue.slice(12,24);
+  const d25 = [...data.revenue.slice(24,30), ...Array(6).fill(null)];
+  if (compareChart) compareChart.destroy();
+  compareChart = new Chart(document.getElementById('compareChart'), {
+    type: 'bar',
+    data: {
+      labels: allMonths,
+      datasets: [
+        { label: '2023', data: d23, backgroundColor: '#378add', borderRadius: 3, borderWidth: 0 },
+        { label: '2024', data: d24, backgroundColor: '#1d9e75', borderRadius: 3, borderWidth: 0 },
+        { label: '2025', data: d25, backgroundColor: '#d85a30', borderRadius: 3, borderWidth: 0 }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { ticks: { font: { size: 10 }, color: '#888', maxRotation: 45 }, grid: { display: false } },
+        y: {
+          ticks: { callback: v => '$' + Math.round(v/1000) + 'k', font: { size: 11 }, color: '#888' },
+          grid: { color: 'rgba(130,130,130,0.08)' }
+        }
+      }
+    }
+  });
+}
+
+function setView(key, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const [s, e] = ranges[key];
+  buildTrend(s, e);
+}
+
+buildTrend(0, 30);
+buildCompare();
+</script>
